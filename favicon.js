@@ -10,7 +10,7 @@
     var sequencePause;
     var iconSequence;
     var iconIndex;
-    var loopTimer = null;
+    var loopTimeout = null;
     var preloadIcons = function(icons) {
         var image = new Image();
         for (var i = 0; i < icons.length; i++) {
@@ -42,27 +42,28 @@
     global["favicon"] = {
         "defaultPause": 2000,
         "change": function(iconURL, optionalDocTitle) {
-            clearTimeout(loopTimer);
+            clearTimeout(loopTimeout);
             if (optionalDocTitle) {
                 document.title = optionalDocTitle;
             }
             addLink(iconURL);
         },
         "animate": function(icons, optionalDelay) {
-            clearTimeout(loopTimer);
+            clearTimeout(loopTimeout);
             var that = this;
             preloadIcons(icons);
             iconSequence = icons;
-            sequencePause = (optionalDelay) ? optionalDelay : that["defaultpause"];
+            sequencePause = (optionalDelay) ? optionalDelay : that["defaultPause"];
             iconIndex = 0;
             that["change"](iconSequence[0]);
-            loopTimer = setInterval(function() {
+            loopTimeout = setTimeout(function animateFunc() {
                 iconIndex = (iconIndex + 1) % iconSequence.length;
                 addLink(iconSequence[iconIndex]);
+                loopTimeout = setTimeout(animateFunc, sequencePause);
             }, sequencePause);
         },
         "stopAnimate": function() {
-            clearTimeout(loopTimer);
+            clearTimeout(loopTimeout);
         }
     };
 })(this);
