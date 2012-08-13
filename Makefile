@@ -1,0 +1,36 @@
+COMPILER_ZIP = compiler-latest.zip
+COMPILER_JAR = compiler.jar
+COMPILER_DL_URL = http://closure-compiler.googlecode.com/files/
+BUILD_DIR = build
+JAVA = /usr/bin/env java
+FAVICON_JS = favicon.js
+FAVICON_MIN_JS = favicon.min.js
+TEST_HTML = test.html
+LICENSE = http://mit-license.org/
+OUTPUT_WRAPPER = /* $(LICENSE) */ (function() {%output%})();
+FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
+
+minify: compiler $(FAVICON_JS)
+	$(JAVA) -jar ./$(BUILD_DIR)/$(COMPILER_JAR) $(FLAGS)
+
+compiler: dl-compiler
+    ifeq ('$(wildcard $(BUILD_DIR)/$(COMPILER_JAR))','')
+		unzip -qo ./$(BUILD_DIR)/$(COMPILER_ZIP) -d $(BUILD_DIR)
+    endif
+
+dl-compiler: build-dir
+    ifeq ('$(wildcard $(BUILD_DIR)/$(COMPILER_ZIP))','')
+		curl "$(COMPILER_DL_URL)$(COMPILER_ZIP)" -o ./$(BUILD_DIR)/$(COMPILER_ZIP)
+    endif
+
+build-dir:
+    ifeq ('$(wildcard $(BUILD_DIR))','')
+		mkdir $(BUILD_DIR)
+    endif
+
+clean:
+	rm -rf ./$(BUILD_DIR)
+	rm $(FAVICON_MIN_JS)
+
+test:
+	xdg-open $(TEST_HTML)

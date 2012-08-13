@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Favicon Test</title>
+        <link rel="icon" type="icon/x-image" href="http://g.etfv.co/http://www.google.com" />
+        <script type="text/javascript" src="favicon.min.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                var change = document.getElementById("change");
+                var animate = document.getElementById("animate");
+                var stopAnimate = document.getElementById("stopAnimate");
+                change.onclick = function() {
+                    favicon.change("http://g.etfv.co/http://en.wikipedia.org", "New title");
+                };
+                animate.onclick = function() {
+                    favicon.animate(["http://g.etfv.co/http://www.google.com", "http://g.etfv.co/http://en.wikipedia.org"]);
+                };
+                stopAnimate.onclick = function() {
+                    favicon.stopAnimate();
+                };
+            };
+        </script>
+    </head>
+    <body>
+        <a id="change" href="#">Change favicon w/ title</a><br />
+        <a id="animate" href="#">Animate favicon</a><br />
+        <a id="stopAnimate" href="#">Stop animation</a>
+    </body>
+</html>
