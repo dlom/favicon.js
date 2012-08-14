@@ -18,21 +18,17 @@
         }
     };
     var addLink = function(iconUrl) {
-        var link = document.createElement("link");
-        link.type = "image/x-icon";
-        link.rel = "icon";
-        link.href = iconUrl;
+        var newLink = document.createElement("link");
+        newLink.type = "image/x-icon";
+        newLink.rel = "icon";
+        newLink.href = iconUrl;
         removeLinkIfExists();
-        head.appendChild(link);
+        head.appendChild(newLink);
     };
     var removeLinkIfExists = function() {
         var links = head.getElementsByTagName("link");
-        for (var i = 0; i < links.length; i++) {
-            if ((links[i].getAttribute('rel') || '').match(/\bicon\b/)) {
-                head.removeChild(links[i]);
-                return;
-            }
-        }
+        var l = links.length;
+        for (; --l >= 0; /\bicon\b/i.test(links[l].getAttribute("rel")) && head.removeChild(links[l])) {}
     };
 
     /*
