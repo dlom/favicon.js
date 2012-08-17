@@ -10,23 +10,23 @@ LICENSE = http://mit-license.org/
 OUTPUT_WRAPPER = /* $(LICENSE) */ (function() {%output%})();
 FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
 
-minify: compiler $(FAVICON_JS)
+minify: $(FAVICON_JS) | compiler-jar
 	$(JAVA) -jar ./$(BUILD_DIR)/$(COMPILER_JAR) $(FLAGS)
 
-compiler: dl-compiler
-    ifeq ('$(wildcard $(BUILD_DIR)/$(COMPILER_JAR))','')
-		unzip -qo ./$(BUILD_DIR)/$(COMPILER_ZIP) -d $(BUILD_DIR)
-    endif
+compiler-jar: $(BUILD_DIR)/$(COMPILER_JAR)
 
-dl-compiler: build-dir
-    ifeq ('$(wildcard $(BUILD_DIR)/$(COMPILER_ZIP))','')
-		curl "$(COMPILER_DL_URL)$(COMPILER_ZIP)" -o ./$(BUILD_DIR)/$(COMPILER_ZIP)
-    endif
+$(BUILD_DIR)/$(COMPILER_JAR): | compiler-zip
+	unzip -qo ./$(BUILD_DIR)/$(COMPILER_ZIP) -d $(BUILD_DIR)
 
-build-dir:
-    ifeq ('$(wildcard $(BUILD_DIR))','')
-		mkdir $(BUILD_DIR)
-    endif
+compiler-zip: $(BUILD_DIR)/$(COMPILER_ZIP)
+
+$(BUILD_DIR)/$(COMPILER_ZIP): | build-dir
+	curl "$(COMPILER_DL_URL)$(COMPILER_ZIP)" -o ./$(BUILD_DIR)/$(COMPILER_ZIP)
+
+build-dir: $(BUILD_DIR)
+
+$(BUILD_DIR):
+	mkdir $(BUILD_DIR)
 
 clean:
 	rm -rf ./$(BUILD_DIR)
