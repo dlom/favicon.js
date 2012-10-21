@@ -12,11 +12,11 @@ A tiny (700 bytes) library for changing the favicon of the page.
 
 ### Basic usage
 ```javascript
-favicon.change(faviconurl);
-favicon.change(faivoncurl, newtitle);
+favicon.change(faviconUrl);
+favicon.change(faviconUrl, newTitle);
 favicon.animate([array, of, urls]);
-favicon.animate([array, of, urls], pauseLengthMillis);
-favicon.defaultPause = 1000;
+favicon.animate([array, of, urls], pauseLength); // Milliseconds
+favicon.defaultPause = 1000; // Milliseconds
 favicon.stopAnimate();
 ```
 
