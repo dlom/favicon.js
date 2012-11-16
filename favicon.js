@@ -6,6 +6,9 @@
      *  Private
      */
 
+    if (global["favicon"])
+        return;
+
     var head = global.document.getElementsByTagName("head")[0];
     var sequencePause;
     var iconSequence;
