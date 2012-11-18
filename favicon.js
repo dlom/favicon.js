@@ -45,7 +45,9 @@
             if (optionalDocTitle) {
                 document.title = optionalDocTitle;
             }
-            addLink(iconURL);
+            if (iconUrl !== "") {
+                addLink(iconURL);
+            }
         },
         "animate": function(icons, optionalDelay) {
             clearTimeout(loopTimeout);
