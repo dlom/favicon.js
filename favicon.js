@@ -45,7 +45,7 @@
             if (optionalDocTitle) {
                 document.title = optionalDocTitle;
             }
-            if (iconUrl !== "") {
+            if (iconURL !== "") {
                 addLink(iconURL);
             }
         },
