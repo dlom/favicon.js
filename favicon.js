@@ -1,13 +1,13 @@
 /* http://mit-license.org/ */
 
 (function(global) {
-
-    /*
-     *  Private
-     */
-
-    if (global["favicon"])
+    if (global["favicon"]) {
         return;
+    }
+
+    /*\
+    |*| Private
+    \*/
 
     var head = global.document.getElementsByTagName("head")[0];
     var sequencePause;
@@ -34,9 +34,9 @@
         for (; --l >= 0; /\bicon\b/i.test(links[l].getAttribute("rel")) && head.removeChild(links[l])) {}
     };
 
-    /*
-     *  Public
-     */
+    /*\
+    |*| Public
+    \*/
 
     global["favicon"] = {
         "defaultPause": 2000,
