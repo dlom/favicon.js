@@ -6,15 +6,15 @@ JAVA = /usr/bin/env java
 FAVICON_JS = favicon.js
 FAVICON_MIN_JS = favicon.min.js
 TEST_HTML = index.html
-LICENSE = http://mit-license.org/
-OUTPUT_WRAPPER = /* $(LICENSE) */ (function() {%output%})();
+LICENSE = http://mit-license.org
+OUTPUT_WRAPPER = /* $(LICENSE) */ (function(){%output%})();
 FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
 
 .PHONY: minify compiler-jar compiler-zip build-dir clean test
 
 minify: $(FAVICON_JS) | compiler-jar
 	$(JAVA) -jar ./$(BUILD_DIR)/$(COMPILER_JAR) $(FLAGS)
-	echo "Size: $$(stat --format="%s" $(FAVICON_MIN_JS)) bytes"
+	@echo "Size: $$(stat --format="%s" $(FAVICON_MIN_JS)) bytes"
 
 compiler-jar: $(BUILD_DIR)/$(COMPILER_JAR)
 
