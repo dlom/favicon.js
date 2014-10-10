@@ -1,6 +1,6 @@
 /* http://mit-license.org/ */
 
-(function(global) {
+(function(global, doc) {
     if (global["favicon"]) {
         return;
     }
@@ -9,10 +9,7 @@
     |*| Private
     \*/
 
-    var head = global.document.getElementsByTagName("head")[0];
-    var sequencePause;
-    var iconSequence;
-    var iconIndex;
+    var head = doc.getElementsByTagName("head")[0];
     var loopTimeout = null;
     var preloadIcons = function(icons) {
         var image = new Image();
@@ -20,18 +17,17 @@
             image.src = icons[i];
         }
     };
-    var addLink = function(iconUrl) {
-        var newLink = document.createElement("link");
+    var addLink = function(iconURL) {
+        var newLink = doc.createElement("link");
         newLink.type = "image/x-icon";
         newLink.rel = "icon";
-        newLink.href = iconUrl;
+        newLink.href = iconURL;
         removeLinkIfExists();
         head.appendChild(newLink);
     };
     var removeLinkIfExists = function() {
         var links = head.getElementsByTagName("link");
-        var l = links.length;
-        for (; --l >= 0; /\bicon\b/i.test(links[l].getAttribute("rel")) && head.removeChild(links[l])) {}
+        for (var i = links.length; --i >= 0; /\bicon\b/i.test(links[i].getAttribute("rel")) && head.removeChild(links[i])) {}
     };
 
     /*\
@@ -43,7 +39,7 @@
         "change": function(iconURL, optionalDocTitle) {
             clearTimeout(loopTimeout);
             if (optionalDocTitle) {
-                document.title = optionalDocTitle;
+                doc.title = optionalDocTitle;
             }
             if (iconURL !== "") {
                 addLink(iconURL);
@@ -51,20 +47,18 @@
         },
         "animate": function(icons, optionalDelay) {
             clearTimeout(loopTimeout);
-            var that = this;
             preloadIcons(icons);
-            iconSequence = icons;
-            sequencePause = (optionalDelay) ? optionalDelay : that["defaultPause"];
-            iconIndex = 0;
-            that["change"](iconSequence[0]);
+            optionalDelay = optionalDelay || this["defaultPause"];
+            var iconIndex = 0;
+            addLink(icons[iconIndex]);
             loopTimeout = setTimeout(function animateFunc() {
-                iconIndex = (iconIndex + 1) % iconSequence.length;
-                addLink(iconSequence[iconIndex]);
-                loopTimeout = setTimeout(animateFunc, sequencePause);
-            }, sequencePause);
+                iconIndex = (iconIndex + 1) % icons.length;
+                addLink(icons[iconIndex]);
+                loopTimeout = setTimeout(animateFunc, optionalDelay);
+            }, optionalDelay);
         },
         "stopAnimate": function() {
             clearTimeout(loopTimeout);
         }
     };
-})(this);
+})(this, document);
