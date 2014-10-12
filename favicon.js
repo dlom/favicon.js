@@ -5,34 +5,24 @@
         return;
     }
 
-    /*\
-    |*| Private
-    \*/
+    // private
 
     var head = doc.getElementsByTagName("head")[0];
     var loopTimeout = null;
-    var preloadIcons = function(icons) {
-        var image = new Image();
-        for (var i = 0; i < icons.length; i++) {
-            image.src = icons[i];
-        }
-    };
-    var addLink = function(iconURL) {
+    var changeFavicon = function(iconURL) {
         var newLink = doc.createElement("link");
         newLink.type = "image/x-icon";
         newLink.rel = "icon";
         newLink.href = iconURL;
-        removeLinkIfExists();
+        removeExistingFavicons();
         head.appendChild(newLink);
     };
-    var removeLinkIfExists = function() {
+    var removeExistingFavicons = function() {
         var links = head.getElementsByTagName("link");
         for (var i = links.length; --i >= 0; /\bicon\b/i.test(links[i].getAttribute("rel")) && head.removeChild(links[i])) {}
     };
 
-    /*\
-    |*| Public
-    \*/
+    // public
 
     global["favicon"] = {
         "defaultPause": 2000,
@@ -42,18 +32,21 @@
                 doc.title = optionalDocTitle;
             }
             if (iconURL !== "") {
-                addLink(iconURL);
+                changeFavicon(iconURL);
             }
         },
         "animate": function(icons, optionalDelay) {
             clearTimeout(loopTimeout);
-            preloadIcons(icons);
+            // preload icons
+            icons.forEach(function(icon) {
+                (new Image()).src = icon;
+            });
             optionalDelay = optionalDelay || this["defaultPause"];
             var iconIndex = 0;
-            addLink(icons[iconIndex]);
+            changeFavicon(icons[iconIndex]);
             loopTimeout = setTimeout(function animateFunc() {
                 iconIndex = (iconIndex + 1) % icons.length;
-                addLink(icons[iconIndex]);
+                changeFavicon(icons[iconIndex]);
                 loopTimeout = setTimeout(animateFunc, optionalDelay);
             }, optionalDelay);
         },
