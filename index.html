@@ -2,16 +2,17 @@
 <html>
     <head>
         <title>Favicon Test</title>
-        <link rel="icon" type="icon/x-image" href="http://g.etfv.co/http://www.google.com" />
+        <link rel="icon" type="icon/x-image" href="https://www.google.com/s2/favicons?domain=http://www.google.com" />
         <script type="text/javascript" src="favicon.min.js"></script>
         <script type="text/javascript">
+	    var getFaviconApi = "https://www.google.com/s2/favicons?domain=";
             window.onload = function() {
                 var change = document.getElementById("change");
                 var animate = document.getElementById("animate");
                 var animate2 = document.getElementById("animate2");
                 var stopAnimate = document.getElementById("stopAnimate");
                 change.onclick = function() {
-                    favicon.change("http://g.etfv.co/http://en.wikipedia.org", "Wikipedia, the free encyclopedia");
+                    favicon.change(getFaviconApi + "http://en.wikipedia.org", "Wikipedia, the free encyclopedia");
                 };
                 animate.onclick = function() {
                     favicon.animate([
@@ -23,10 +24,10 @@
                 };
                 animate2.onclick = function() {
                     favicon.animate([
-                        "http://g.etfv.co/https://www.github.com",
-                        "http://g.etfv.co/https://www.wikipedia.org",
-                        "http://g.etfv.co/https://www.reddit.com",
-                        "http://g.etfv.co/https://www.google.com"
+                        getFaviconApi + "https://www.github.com",
+                        getFaviconApi + "https://www.wikipedia.org",
+                        getFaviconApi + "https://www.reddit.com",
+                        getFaviconApi + "https://www.google.com"
                     ], 100);
                 }
                 stopAnimate.onclick = function() {
