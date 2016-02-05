@@ -19,7 +19,11 @@
     };
     var removeExistingFavicons = function() {
         var links = head.getElementsByTagName("link");
-        for (var i = links.length; --i >= 0; /\bicon\b/i.test(links[i].getAttribute("rel")) && head.removeChild(links[i])) {}
+        for (var i = 0; i < links.length; i++) {
+            if (/\bicon\b/i.test(links[i].getAttribute("rel"))) {
+                head.removeChild(links[i]);
+            }
+        }
     };
 
     // public
