@@ -2,10 +2,10 @@
 <html>
     <head>
         <title>Favicon Test</title>
-        <link rel="icon" type="icon/x-image" href="https://www.google.com/s2/favicons?domain=http://www.google.com" />
+        <link rel="icon" type="icon/x-image" href="https://api.byi.pw/favicon/?url=http://www.google.com" />
         <script type="text/javascript" src="favicon.min.js"></script>
         <script type="text/javascript">
-	    var getFaviconApi = "https://www.google.com/s2/favicons?domain=";
+	    var getFaviconApi = "https://api.byi.pw/favicon/?url=";
             window.onload = function() {
                 var change = document.getElementById("change");
                 var animate = document.getElementById("animate");
@@ -28,7 +28,7 @@
                         getFaviconApi + "https://www.wikipedia.org",
                         getFaviconApi + "https://www.reddit.com",
                         getFaviconApi + "https://www.google.com"
-                    ], 100);
+                    ], 200);
                 }
                 stopAnimate.onclick = function() {
                     favicon.stopAnimate();
