@@ -1,5 +1,5 @@
 COMPILER_ZIP = compiler-latest.zip
-COMPILER_JAR = compiler.jar
+COMPILER_JAR = closure-compiler-v*.jar
 COMPILER_DL_URL = http://dl.google.com/closure-compiler/
 BUILD_DIR = build
 JAVA = /usr/bin/env java
