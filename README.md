@@ -4,10 +4,14 @@ A tiny (817 bytes) library for changing the favicon of the page.
 
 [Live demo](http://dlom.github.com/favicon.js/)
 
-## Download
+## Usage (CDN/Download)
 
 * [favicon.js](https://unpkg.com/favicon.js) (latest development version)
 * [favicon.min.js](https://unpkg.com/favicon.js/dist/favicon.min.js) (latest production version)
+
+## Usage (npm)
+
+* `npm install favicon.js` or `yarn add favicon.js`
 
 ## Documentation
 
