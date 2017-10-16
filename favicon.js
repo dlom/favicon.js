@@ -1,10 +1,20 @@
 /* http://mit-license.org/ */
 
-(function(global, doc) {
-    if (global["favicon"]) {
-        return;
-    }
-
+(function (root, factory) {
+    if (typeof define === "function" && define["amd"]) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof module === "object" && module["exports"]) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module["exports"] = factory();
+    } else {
+        // Browser globals (root is window)
+        root["favicon"] = factory();
+  }
+}(typeof self !== "undefined" ? self : this, function () {
+    var doc = document;
     // private
 
     var head = doc.getElementsByTagName("head")[0];
@@ -28,7 +38,7 @@
 
     // public
 
-    global["favicon"] = {
+    var favicon = {
         "defaultPause": 2000,
         "change": function(iconURL, optionalDocTitle) {
             clearTimeout(loopTimeout);
@@ -58,4 +68,6 @@
             clearTimeout(loopTimeout);
         }
     };
-})(this, document);
+
+    return favicon;
+}));

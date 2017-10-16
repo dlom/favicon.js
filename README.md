@@ -1,12 +1,12 @@
 # favicon.js
 
-A tiny (684 bytes) library for changing the favicon of the page.
+A tiny (817 bytes) library for changing the favicon of the page.
 
 [Live demo](http://dlom.github.com/favicon.js/)
 
 ## Download
 
-[favicon.min.js](http://dlom.github.com/favicon.js/favicon.min.js)
+[favicon.min.js](http://dlom.github.io/favicon.js/dist/favicon.min.js)
 
 ## Documentation
 

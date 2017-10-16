@@ -10,11 +10,12 @@ FAVICON_MIN_JS_MAP = $(FAVICON_MIN_JS).map
 TEST_HTML = index.html
 LICENSE = http://mit-license.org
 OUTPUT_WRAPPER = /* $(LICENSE) */ %output%
-FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --create_source_map $(FAVICON_MIN_JS_MAP) --source_map_format V3 --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
+EXTERNS = externs.js
+FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --create_source_map $(FAVICON_MIN_JS_MAP) --source_map_format V3 --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)" --externs $(EXTERNS)
 
 .PHONY: minify compiler-jar compiler-zip build-dir clean test
 
-minify: $(FAVICON_JS) | compiler-jar
+minify: $(EXTERNS) $(FAVICON_JS) | compiler-jar
 	$(JAVA) -jar ./$(BUILD_DIR)/$(COMPILER_JAR) $(FLAGS)
 	@echo "Size: $$(stat --format="%s" $(FAVICON_MIN_JS)) bytes"
 
@@ -33,9 +34,13 @@ build-dir: $(BUILD_DIR)
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
+$(EXTERNS):
+	echo "var module; var define;" > $(EXTERNS)
+
 clean:
 	rm -rf ./$(BUILD_DIR)
 	rm -rf ./$(DIST_DIR)
+	rm -f ./$(EXTERNS)
 
 test:
 	xdg-open $(TEST_HTML)
