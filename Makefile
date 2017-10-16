@@ -2,13 +2,15 @@ COMPILER_ZIP = compiler-latest.zip
 COMPILER_JAR = closure-compiler-v*.jar
 COMPILER_DL_URL = http://dl.google.com/closure-compiler/
 BUILD_DIR = build
+DIST_DIR = dist
 JAVA = /usr/bin/env java
 FAVICON_JS = favicon.js
-FAVICON_MIN_JS = favicon.min.js
+FAVICON_MIN_JS = $(DIST_DIR)/favicon.min.js
+FAVICON_MIN_JS_MAP = $(FAVICON_MIN_JS).map
 TEST_HTML = index.html
 LICENSE = http://mit-license.org
 OUTPUT_WRAPPER = /* $(LICENSE) */ %output%
-FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
+FLAGS = --js $(FAVICON_JS) --js_output_file $(FAVICON_MIN_JS) --create_source_map $(FAVICON_MIN_JS_MAP) --source_map_format V3 --compilation_level ADVANCED_OPTIMIZATIONS --output_wrapper "$(OUTPUT_WRAPPER)"
 
 .PHONY: minify compiler-jar compiler-zip build-dir clean test
 
@@ -33,7 +35,7 @@ $(BUILD_DIR):
 
 clean:
 	rm -rf ./$(BUILD_DIR)
-	rm $(FAVICON_MIN_JS)
+	rm -rf ./$(DIST_DIR)
 
 test:
 	xdg-open $(TEST_HTML)
