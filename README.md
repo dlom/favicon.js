@@ -1,4 +1,4 @@
-# favicon.js
+# favicon.js [![npm](https://img.shields.io/npm/v/favicon.js.svg)](https://www.npmjs.com/package/favicon.js)
 
 A tiny (817 bytes) library for changing the favicon of the page.
 
